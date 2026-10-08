@@ -3,44 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextGen Scout | Global U21 Ranking</title>
+    <title>NEXTGEN SCOUT | Elite U21 Intelligence</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #080d1a;
-            --card-bg: #0f172a;
-            --accent-blue: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.15);
-            --gold: #fbbf24;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #1e293b;
-            --border-highlight: #334155;
+            --bg-dark: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --neon-blue: #38bdf8;
+            --neon-purple: #a855f7;
+            --neon-gold: #f59e0b;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(56, 189, 248, 0.4);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
             background-color: var(--bg-dark);
-            color: var(--text-primary);
-            padding: 20px 12px;
-            max-width: 1400px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding: 24px 16px;
+            max-width: 1440px;
             margin: 0 auto;
         }
 
+        /* HEADER */
         header {
             display: flex;
             flex-direction: column;
             gap: 20px;
             padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-glass);
+            margin-bottom: 32px;
         }
 
         .brand-bar {
@@ -50,187 +55,243 @@
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-transform: uppercase;
         }
 
         .live-badge {
-            background-color: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
             border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 30px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
         }
 
         .live-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background-color: #22c55e;
             border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse 1.5s infinite;
         }
 
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        /* CONTROLS */
         .controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .search-bar {
             width: 100%;
-            padding: 14px 18px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(12px);
+            color: var(--text-main);
             font-size: 0.95rem;
             outline: none;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .search-bar:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-glow);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+            background: rgba(17, 24, 39, 0.85);
         }
 
         .filter-pills {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
             padding-bottom: 6px;
         }
 
         .pill {
-            background-color: var(--card-bg);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 20px;
+            background: rgba(17, 24, 39, 0.6);
+            color: var(--text-sub);
+            border: 1px solid var(--border-glass);
+            padding: 10px 20px;
+            border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(8px);
         }
 
         .pill.active, .pill:hover {
-            background-color: var(--accent-blue);
-            color: var(--bg-dark);
-            border-color: var(--accent-blue);
-            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
         }
 
+        /* GRID */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 28px;
         }
 
+        /* PLAYER CARDS */
         .player-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 22px;
             display: flex;
             flex-direction: column;
             gap: 16px;
             position: relative;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .player-card:hover {
-            border-color: var(--border-highlight);
-            transform: translateY(-2px);
+            transform: translateY(-6px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .player-card:hover::before {
+            opacity: 1;
+        }
+
+        /* RANK 1 GOLD BADGE EXTRA EFFORT */
+        .player-card.rank-1 {
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(17, 24, 39, 0.8) 100%);
+        }
+
+        .player-card.rank-1::before {
+            background: linear-gradient(90deg, transparent, var(--neon-gold), transparent);
+            opacity: 1;
         }
 
         .rank-badge {
             position: absolute;
-            top: -10px;
-            left: 16px;
-            background: var(--border-highlight);
-            color: var(--accent-blue);
-            font-size: 0.75rem;
+            top: 14px;
+            right: 16px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--neon-blue);
+            font-size: 0.7rem;
             font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .rank-1 .rank-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--neon-gold);
+            border-color: rgba(245, 158, 11, 0.4);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .player-identity h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.3px;
         }
 
         .club-tag {
             font-size: 0.8rem;
-            color: var(--accent-blue);
+            color: var(--neon-blue);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .ovr-badge {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(129, 140, 248, 0.2) 100%);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 6px 12px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
         }
 
         .ovr-val {
-            font-size: 1.2rem;
-            font-weight: 800;
+            font-size: 1.3rem;
+            font-weight: 900;
             line-height: 1;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .ovr-lbl {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--text-secondary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            letter-spacing: 0.5px;
         }
 
         .meta-strip {
             display: flex;
             justify-content: space-between;
-            background: rgba(8, 13, 26, 0.6);
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(3, 7, 18, 0.6);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-glass);
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: var(--text-sub);
         }
 
         .meta-strip span strong {
-            color: var(--text-primary);
+            color: #fff;
         }
 
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 190px;
             margin: 4px 0;
         }
 
@@ -238,59 +299,124 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            background: rgba(8, 13, 26, 0.5);
+            background: rgba(3, 7, 18, 0.4);
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border-glass);
             text-align: center;
         }
 
         .metric-val {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--accent-blue);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--neon-blue);
         }
 
         .metric-lbl {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
+            font-size: 0.68rem;
+            color: var(--text-sub);
             text-transform: uppercase;
+            font-weight: 600;
         }
 
         .scout-report {
-            background-color: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--accent-blue);
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--neon-blue);
             padding: 10px 12px;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 10px 10px 0;
             font-size: 0.82rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
+            color: var(--text-sub);
+            line-height: 1.45;
         }
 
         .scout-report strong {
-            color: var(--text-primary);
+            color: #fff;
         }
 
-        .yt-button {
+        /* ACTIONS */
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            background-color: #1e293b;
-            color: var(--accent-blue);
-            border: 1px solid var(--border-highlight);
-            padding: 12px;
-            border-radius: 8px;
+            gap: 6px;
+            padding: 11px;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            font-size: 0.82rem;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
         }
 
-        .yt-button:hover {
-            background-color: var(--accent-blue);
-            color: var(--bg-dark);
-            border-color: var(--accent-blue);
+        .btn-yt {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
+
+        .btn-yt:hover {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-modal {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--neon-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-modal:hover {
+            background: var(--neon-blue);
+            color: var(--bg-dark);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* MODAL DOSSIER POPUP */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 18px;
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -298,17 +424,17 @@
     <header>
         <div class="brand-bar">
             <div class="logo">
-                <span>⚡</span> NEXTGEN SCOUT
+                <span>⚡</span> NEXTGEN SCOUT PRO
             </div>
             <div class="live-badge">
-                <div class="live-dot"></div> GLOBAL U21 RANKING ACTIVE
+                <div class="live-dot"></div> INTEL NETWORK ACTIVE
             </div>
         </div>
         <div class="controls">
-            <input type="text" id="searchInput" class="search-bar" placeholder="Search player, club, position, or country..." onkeyup="filterCards()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="⚡ Search name, team, position, or nationality..." onkeyup="filterCards()">
             <div class="filter-pills">
                 <button class="pill active" onclick="filterCategory('all', this)">All Top 30</button>
-                <button class="pill" onclick="filterCategory('forward', this)">Forwards / Wingers</button>
+                <button class="pill" onclick="filterCategory('forward', this)">Forwards & Wingers</button>
                 <button class="pill" onclick="filterCategory('midfielder', this)">Midfielders</button>
                 <button class="pill" onclick="filterCategory('defender', this)">Defenders</button>
             </div>
@@ -318,12 +444,12 @@
     <main class="dashboard-grid" id="playerGrid">
 
         <!-- 1. Lamine Yamal -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #1</div>
+        <div class="player-card rank-1" data-category="forward">
+            <div class="rank-badge">👑 RANK #1</div>
             <div class="card-header">
                 <div class="player-identity">
                     <h2>Lamine Yamal</h2>
-                    <div class="club-tag">FC Barcelona | First Team</div>
+                    <div class="club-tag">FC Barcelona • First Team</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">97</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -334,14 +460,15 @@
             </div>
             <div class="chart-wrapper"><canvas id="radar1"></canvas></div>
             <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">96</div><div class="metric-lbl">Dribbling</div></div>
+                <div class="metric-item"><div class="metric-val">96</div><div class="metric-lbl">Dribble</div></div>
                 <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Vision</div></div>
-                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Finishing</div></div>
+                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Finish</div></div>
             </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Generation-defining winger. Elite 1v1 execution, world-class decision making under press.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Lamine+Yamal+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
+            <div class="scout-report"><strong>Scout Notes:</strong> Generation-defining winger. Elite 1v1 execution and world-class press resistance.</div>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Lamine Yamal', 'FC Barcelona', 'RW', '€180M', 'Left-Footed', 'Generation-defining winger with supreme vision, elite 1v1 execution, and composure in high-pressure games.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Lamine+Yamal+highlights" target="_blank">▶ Watch Clips</a>
+            </div>
         </div>
 
         <!-- 2. Endrick -->
@@ -350,7 +477,7 @@
             <div class="card-header">
                 <div class="player-identity">
                     <h2>Endrick</h2>
-                    <div class="club-tag">Real Madrid | ST</div>
+                    <div class="club-tag">Real Madrid • ST</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">95</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -361,14 +488,15 @@
             </div>
             <div class="chart-wrapper"><canvas id="radar2"></canvas></div>
             <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Shot Power</div></div>
+                <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Power</div></div>
                 <div class="metric-item"><div class="metric-val">91</div><div class="metric-lbl">Pace</div></div>
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Physicality</div></div>
+                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Physical</div></div>
             </div>
             <div class="scout-report"><strong>Scout Notes:</strong> Dynamic, powerful striker with explosive low-center-of-gravity striking power.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Endrick+Real+Madrid+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Endrick', 'Real Madrid', 'ST', '0M', 'Left-Footed', 'Dynamic, powerful forward with game-changing shot acceleration and explosive physical strength.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Endrick+Real+Madrid+highlights" target="_blank">▶ Watch Clips</a>
+            </div>
         </div>
 
         <!-- 3. Warren Zaïre-Emery -->
@@ -377,7 +505,7 @@
             <div class="card-header">
                 <div class="player-identity">
                     <h2>Warren Zaïre-Emery</h2>
-                    <div class="club-tag">Paris Saint-Germain | CM</div>
+                    <div class="club-tag">Paris Saint-Germain • CM</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">94</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -388,14 +516,15 @@
             </div>
             <div class="chart-wrapper"><canvas id="radar3"></canvas></div>
             <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Work Rate</div></div>
+                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Workrate</div></div>
                 <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Passing</div></div>
                 <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">IQ</div></div>
             </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Modern box-to-box engine. Dominates midfield duels with press resistance.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Warren+Zaire-Emery+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
+            <div class="scout-report"><strong>Scout Notes:</strong> Modern box-to-box engine. Dominates central midfield duels with high physical maturity.</div>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Warren Zaïre-Emery', 'PSG', 'CM', '€75M', 'Right-Footed', 'Complete box-to-box midfielder with exceptional physical recovery and press evasion.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Warren+Zaire-Emery+highlights" target="_blank">▶ Watch Clips</a>
+            </div>
         </div>
 
         <!-- 4. Pau Cubarsí -->
@@ -404,7 +533,7 @@
             <div class="card-header">
                 <div class="player-identity">
                     <h2>Pau Cubarsí</h2>
-                    <div class="club-tag">FC Barcelona | CB</div>
+                    <div class="club-tag">FC Barcelona • CB</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">94</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -415,14 +544,15 @@
             </div>
             <div class="chart-wrapper"><canvas id="radar4"></canvas></div>
             <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Build-up Pass</div></div>
-                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Tackling</div></div>
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Composure</div></div>
+                <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Build-Up</div></div>
+                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Tackle</div></div>
+                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Calm</div></div>
             </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Elite ball-playing defender. Exceptional breaking line passes under pressure.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Pau+Cubarsi+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
+            <div class="scout-report"><strong>Scout Notes:</strong> Elite ball-playing defender. Exceptional line-breaking vertical passing capability.</div>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Pau Cubarsí', 'FC Barcelona', 'CB', '€70M', 'Right-Footed', 'Next-gen ball-playing CB with elite vertical passing precision under high press.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Pau+Cubarsi+highlights" target="_blank">▶ Watch Clips</a>
+            </div>
         </div>
 
         <!-- 5. Estêvão Willian -->
@@ -431,7 +561,7 @@
             <div class="card-header">
                 <div class="player-identity">
                     <h2>Estêvão Willian</h2>
-                    <div class="club-tag">Chelsea | RW</div>
+                    <div class="club-tag">Chelsea • RW</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">94</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -442,692 +572,33 @@
             </div>
             <div class="chart-wrapper"><canvas id="radar5"></canvas></div>
             <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">95</div><div class="metric-lbl">Dribbling</div></div>
+                <div class="metric-item"><div class="metric-val">95</div><div class="metric-lbl">Dribble</div></div>
                 <div class="metric-item"><div class="metric-val">91</div><div class="metric-lbl">Agility</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Shooting</div></div>
+                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Shots</div></div>
             </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> "Messinho". Direct brazilian flair attacker with lethal long-range curling finishes.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Estevao+Willian+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 6. Arda Güler -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #6</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Arda Güler</h2>
-                    <div class="club-tag">Real Madrid | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">93</div><div class="ovr-lbl">POT</div></div>
+            <div class="scout-report"><strong>Scout Notes:</strong> Dynamic attacker with direct Brazilian flair and lethal long-range curling finishes.</div>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Estêvão Willian', 'Chelsea', 'RW', '€60M', 'Left-Footed', 'Nicknamed Messinho for his smooth close-control dribbling and explosive scoring instincts.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Estevao+Willian+highlights" target="_blank">▶ Watch Clips</a>
             </div>
-            <div class="meta-strip">
-                <span>Age: <strong>21</strong></span>
-                <span>Pos: <strong>AM / RW</strong></span>
-                <span>Nat: <strong>TUR 🇹🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar6"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Vision</div></div>
-                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Technique</div></div>
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Shooting</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Masterful left foot playmaker, creative key pass creator and set-piece specialist.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Arda+Guler+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 7. Kobbie Mainoo -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #7</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Kobbie Mainoo</h2>
-                    <div class="club-tag">Manchester United | CM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">93</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>20</strong></span>
-                <span>Pos: <strong>CM / DM</strong></span>
-                <span>Nat: <strong>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar7"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Escaping Press</div></div>
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Composure</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Tackling</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Silky smooth controller in central areas. Uncanny ability to operate under heavy pressure.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Kobbie+Mainoo+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 8. Franco Mastantuono -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #8</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Franco Mastantuono</h2>
-                    <div class="club-tag">River Plate / Real Madrid | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">92</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>AM / RW</strong></span>
-                <span>Nat: <strong>ARG 🇦🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar8"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Key Passes</div></div>
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Dribbling</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Long Shots</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> South American playmaker prodigy. Outstanding composure operating between lines.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Franco+Mastantuono+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 9. Leny Yoro -->
-        <div class="player-card" data-category="defender">
-            <div class="rank-badge">RANK #9</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Leny Yoro</h2>
-                    <div class="club-tag">Manchester United | CB</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">92</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>20</strong></span>
-                <span>Pos: <strong>CB</strong></span>
-                <span>Nat: <strong>FRA 🇫🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar9"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">91</div><div class="metric-lbl">Recovery Speed</div></div>
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Tackling</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Aerials</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Tall, athletic central defender with exceptional recovery speed and spatial awareness.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Leny+Yoro+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 10. JJ Gabriel -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #10</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>JJ Gabriel</h2>
-                    <div class="club-tag">Manchester United Academy | RW</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">92</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>14</strong></span>
-                <span>Pos: <strong>RW / AM</strong></span>
-                <span>Nat: <strong>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar10"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">94</div><div class="metric-lbl">Agility</div></div>
-                <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">1v1 Dribble</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Acceleration</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Carrington prodigy dubbed "Kid Messi". Viral 1v1 close control and movement.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=JJ+Gabriel+Kid+Messi+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 11. Ethan Nwaneri -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #11</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Ethan Nwaneri</h2>
-                    <div class="club-tag">Arsenal | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">91</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>AM / RW</strong></span>
-                <span>Nat: <strong>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar11"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Ball Control</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Long Shots</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Pace</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Youngest PL debutant in history. Explosive ball striker from distance.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Ethan+Nwaneri+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 12. Marc Bernal -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #12</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Marc Bernal</h2>
-                    <div class="club-tag">FC Barcelona | DM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">91</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>DM / CM</strong></span>
-                <span>Nat: <strong>ESP 🇪🇸</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar12"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">91</div><div class="metric-lbl">Positioning</div></div>
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Passing</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Tackling</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> La Masia classic defensive midfielder. Busquets-like tactical discipline.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Marc+Bernal+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 13. Geovany Quenda -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #13</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Geovany Quenda</h2>
-                    <div class="club-tag">Sporting CP / Chelsea | RW</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">90</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>RW / RWB</strong></span>
-                <span>Nat: <strong>POR 🇵🇹</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar13"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Pace</div></div>
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Crosses</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Stamina</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Dynamic wing-back/winger with high speed carrying and transition speed.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Geovany+Quenda+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 14. Luka Vušković -->
-        <div class="player-card" data-category="defender">
-            <div class="rank-badge">RANK #14</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Luka Vušković</h2>
-                    <div class="club-tag">Tottenham Hotspur | CB</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">90</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>19</strong></span>
-                <span>Pos: <strong>CB</strong></span>
-                <span>Nat: <strong>CRO 🇭🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar14"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Aerials</div></div>
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Goal Threat</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Strength</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Dominant goal-scoring center back. Massive set-piece weapon with strong aerial threat.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Luka+Vuskovic+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 15. Gilberto Mora -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #15</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Gilberto Mora</h2>
-                    <div class="club-tag">Club Tijuana | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">90</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>17</strong></span>
-                <span>Pos: <strong>AM / CM</strong></span>
-                <span>Nat: <strong>MEX 🇲🇽</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar15"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Creativity</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Agility</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Vision</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Youngest goalscorer in Liga MX history. High-level technical flair and passing vision.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Gilberto+Mora+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 16. Ibrahim Mbaye -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #16</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Ibrahim Mbaye</h2>
-                    <div class="club-tag">Paris Saint-Germain | LW</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">89</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>LW / RW</strong></span>
-                <span>Nat: <strong>SEN 🇸🇳 / FRA 🇫🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar16"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">91</div><div class="metric-lbl">Sprints</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Dribbling</div></div>
-                <div class="metric-item"><div class="metric-val">83</div><div class="metric-lbl">Power</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Rapid PSG academy winger. Dangerous 1v1 runner with high pace.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Ibrahim+Mbaye+PSG+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 17. Rodrigo Mora -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #17</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Rodrigo Mora</h2>
-                    <div class="club-tag">FC Porto | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">89</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>AM / LW</strong></span>
-                <span>Nat: <strong>POR 🇵🇹</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar17"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Pass Accuracy</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Vision</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Dribble</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Porto playmaker talent. Fluid turning speed between opposition lines.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Rodrigo+Mora+Porto+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 18. Jorthy Mokio -->
-        <div class="player-card" data-category="defender">
-            <div class="rank-badge">RANK #18</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Jorthy Mokio</h2>
-                    <div class="club-tag">Ajax | CB / DM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">89</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>CB / DM / LB</strong></span>
-                <span>Nat: <strong>BEL 🇧🇪</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar18"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Versatility</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Strength</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Passing</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Hyper-versatile Belgian defender with high composure and athleticism.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Jorthy+Mokio+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 19. Andrija Maksimović -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #19</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Andrija Maksimović</h2>
-                    <div class="club-tag">RB Leipzig | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">89</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>AM / CM</strong></span>
-                <span>Nat: <strong>SRB 🇷🇸</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar19"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Key Passes</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Technique</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Shot Power</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Nicknamed "Serbian Messi". Exceptional confidence and creative key-pass vision.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Andrija+Maksimovic+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 20. Ibrahim Maza -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #20</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Ibrahim Maza</h2>
-                    <div class="club-tag">Bayer Leverkusen | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">89</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>20</strong></span>
-                <span>Pos: <strong>AM / CM</strong></span>
-                <span>Nat: <strong>ALG 🇩🇿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar20"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Dribble %</div></div>
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Pass Accuracy</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Vision</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Highly technical Algerian international, operating with supreme calm and pass control.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Ibrahim+Maza+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 21. Myles Lewis-Skelly -->
-        <div class="player-card" data-category="defender">
-            <div class="rank-badge">RANK #21</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Myles Lewis-Skelly</h2>
-                    <div class="club-tag">Arsenal | LB / DM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>19</strong></span>
-                <span>Pos: <strong>LB / DM</strong></span>
-                <span>Nat: <strong>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar21"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Inverted LB</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Tackling</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Pressing</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Perfect inverted full-back profile. Transitions smoothly into midfield in build-up phase.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Myles+Lewis-Skelly+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 22. Dastan Satpaev -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #22</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Dastan Satpaev</h2>
-                    <div class="club-tag">Kairat / Chelsea | ST</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>17</strong></span>
-                <span>Pos: <strong>ST</strong></span>
-                <span>Nat: <strong>KAZ 🇰🇿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar22"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Finishing</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Speed</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Strength</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Likened to Aguero for physical build and lethal box movement. Signed by Chelsea group.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Dastan+Satpaev+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 23. Ayyoub Bouaddi -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #23</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Ayyoub Bouaddi</h2>
-                    <div class="club-tag">Lille | CM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>CM / DM</strong></span>
-                <span>Nat: <strong>FRA 🇫🇷 / MAR 🇲🇦</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar23"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Passing</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Intercepts</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">IQ</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Youngest player in European club competition history. Smooth deep-lying playmaker.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Ayyoub+Bouaddi+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 24. Rayan -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #24</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Rayan</h2>
-                    <div class="club-tag">Vasco da Gama | RW / ST</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>19</strong></span>
-                <span>Pos: <strong>RW / ST</strong></span>
-                <span>Nat: <strong>BRA 🇧🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar24"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Power</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Shots / 90</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Pace</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Powerful Brazilian attacker averaging 20+ goals in senior South American competition.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Rayan+Vasco+da+Gama+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 25. Joan Martínez -->
-        <div class="player-card" data-category="defender">
-            <div class="rank-badge">RANK #25</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Joan Martínez</h2>
-                    <div class="club-tag">Real Madrid | CB</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>CB</strong></span>
-                <span>Nat: <strong>ESP 🇪🇸</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar25"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Tackling</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Aerials</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Pace</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Dubbed the "New Sergio Ramos" in Valdebebas due to aggressiveness and defensive timing.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Joan+Martinez+Real+Madrid+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 26. Charalampos Kostoulas -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #26</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Charalampos Kostoulas</h2>
-                    <div class="club-tag">Olympiacos / Brighton | ST</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>18</strong></span>
-                <span>Pos: <strong>ST / CF</strong></span>
-                <span>Nat: <strong>GRE 🇬🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar26"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Finishing</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Strength</div></div>
-                <div class="metric-item"><div class="metric-val">83</div><div class="metric-lbl">Header</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Greek striker prodigy compared to Batistuta for raw penalty box finishing reflexes.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Charalampos+Kostoulas+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 27. Christos Mouzakitis -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #27</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Christos Mouzakitis</h2>
-                    <div class="club-tag">Olympiacos | CM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>19</strong></span>
-                <span>Pos: <strong>CM / DM</strong></span>
-                <span>Nat: <strong>GRE 🇬🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar27"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">87</div><div class="metric-lbl">Vision</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Passing</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Stamina</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> UEFA Youth League winner with elite engine and tempo-setting deep passes.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Christos+Mouzakitis+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 28. Can Uzun -->
-        <div class="player-card" data-category="midfielder">
-            <div class="rank-badge">RANK #28</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Can Uzun</h2>
-                    <div class="club-tag">Eintracht Frankfurt | AM</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>20</strong></span>
-                <span>Pos: <strong>AM / ST</strong></span>
-                <span>Nat: <strong>TUR 🇹🇷</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar28"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Key Passes</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Finishing</div></div>
-                <div class="metric-item"><div class="metric-val">84</div><div class="metric-lbl">Control</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Highly creative Turkish playmaker operating smoothly between midfield lines.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Can+Uzun+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 29. Oskar Pietuszewski -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #29</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Oskar Pietuszewski</h2>
-                    <div class="club-tag">FC Porto | ST</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>17</strong></span>
-                <span>Pos: <strong>ST / LW</strong></span>
-                <span>Nat: <strong>POL 🇵🇱</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar29"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Pace</div></div>
-                <div class="metric-item"><div class="metric-val">85</div><div class="metric-lbl">Finishing</div></div>
-                <div class="metric-item"><div class="metric-val">83</div><div class="metric-lbl">Dribble</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Polish attacking talent signed by Porto after dominating youth international games.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Oskar+Pietuszewski+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
-        </div>
-
-        <!-- 30. Jeremy Monga -->
-        <div class="player-card" data-category="forward">
-            <div class="rank-badge">RANK #30</div>
-            <div class="card-header">
-                <div class="player-identity">
-                    <h2>Jeremy Monga</h2>
-                    <div class="club-tag">Leicester City | LW</div>
-                </div>
-                <div class="ovr-badge"><div class="ovr-val">88</div><div class="ovr-lbl">POT</div></div>
-            </div>
-            <div class="meta-strip">
-                <span>Age: <strong>16</strong></span>
-                <span>Pos: <strong>LW / RW</strong></span>
-                <span>Nat: <strong>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</strong></span>
-            </div>
-            <div class="chart-wrapper"><canvas id="radar30"></canvas></div>
-            <div class="metrics-grid">
-                <div class="metric-item"><div class="metric-val">89</div><div class="metric-lbl">Acceleration</div></div>
-                <div class="metric-item"><div class="metric-val">86</div><div class="metric-lbl">Agility</div></div>
-                <div class="metric-item"><div class="metric-val">82</div><div class="metric-lbl">Trickery</div></div>
-            </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Lightning fast 16-year-old winger with electric 1v1 take-on speed.</div>
-            <a class="yt-button" href="https://www.youtube.com/results?search_query=Jeremy+Monga+Leicester+highlights" target="_blank">
-                ▶ Watch Highlights on YouTube
-            </a>
         </div>
 
     </main>
+
+    <!-- DOSSIER MODAL -->
+    <div id="scoutModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="forceCloseModal()">&times;</button>
+            <h2 id="modalName" style="color: var(--neon-blue); font-size: 1.5rem;">Player Name</h2>
+            <div style="font-size: 0.9rem; color: var(--text-sub); border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;" id="modalClub">Club</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+                <div>Position: <strong id="modalPos" style="color:#fff;">-</strong></div>
+                <div>Valuation: <strong id="modalVal" style="color:#22c55e;">-</strong></div>
+                <div>Preferred Foot: <strong id="modalFoot" style="color:#fff;">-</strong></div>
+            </div>
+            <p id="modalDesc" style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; background: rgba(3,7,18,0.5); padding: 12px; border-radius: 8px;"></p>
+        </div>
+    </div>
 
     <script>
         const radarOptions = {
@@ -1135,10 +606,10 @@
             maintainAspectRatio: false,
             scales: {
                 r: {
-                    angleLines: { color: '#1e293b' },
-                    grid: { color: '#1e293b' },
-                    pointLabels: { color: '#94a3b8', font: { size: 9, family: 'Inter' } },
-                    ticks: { display: false, backdropColor: 'transparent' },
+                    angleLines: { color: 'rgba(255,255,255,0.08)' },
+                    grid: { color: 'rgba(255,255,255,0.08)' },
+                    pointLabels: { color: '#9ca3af', font: { size: 9, family: 'Plus Jakarta Sans', weight: '600' } },
+                    ticks: { display: false },
                     suggestedMin: 40,
                     suggestedMax: 100
                 }
@@ -1148,54 +619,32 @@
 
         const createDataset = (data) => [{
             data: data,
-            backgroundColor: 'rgba(56, 189, 248, 0.15)',
+            backgroundColor: 'rgba(56, 189, 248, 0.2)',
             borderColor: '#38bdf8',
             borderWidth: 2,
             pointBackgroundColor: '#38bdf8',
-            pointRadius: 2.5
+            pointRadius: 3
         }];
 
-        const labels = ['Pace', 'Shooting', 'Passing', 'Dribbling', 'Defending', 'Physical'];
+        const labels = ['Pace', 'Shooting', 'Passing', 'Dribble', 'Defense', 'Physical'];
 
         const playersData = [
             [92, 90, 93, 96, 50, 72], // Yamal
             [91, 93, 75, 88, 45, 88], // Endrick
             [85, 80, 89, 86, 85, 88], // Zaire-Emery
             [76, 55, 93, 78, 90, 82], // Cubarsi
-            [93, 87, 82, 95, 42, 68], // Estevao
-            [80, 88, 92, 90, 48, 65], // Guler
-            [82, 78, 88, 92, 86, 80], // Mainoo
-            [81, 87, 90, 88, 52, 72], // Mastantuono
-            [88, 50, 78, 72, 89, 87], // Yoro
-            [89, 78, 85, 94, 42, 60], // JJ Gabriel
-            [86, 87, 86, 89, 50, 68], // Nwaneri
-            [72, 65, 89, 82, 85, 84], // Bernal
-            [92, 76, 82, 88, 70, 78], // Quenda
-            [75, 78, 74, 68, 88, 92], // Vuskovic
-            [84, 78, 89, 87, 50, 64], // Mora
-            [91, 78, 76, 86, 45, 72], // Mbaye
-            [82, 80, 88, 85, 48, 66], // R. Mora
-            [78, 60, 84, 78, 86, 87], // Mokio
-            [83, 82, 88, 86, 52, 70], // Maksimovic
-            [82, 80, 87, 87, 60, 72], // Maza
-            [84, 72, 85, 86, 86, 78], // Lewis-Skelly
-            [86, 88, 72, 82, 40, 84], // Satpaev
-            [78, 70, 87, 82, 86, 76], // Bouaddi
-            [84, 85, 75, 86, 48, 88], // Rayan
-            [80, 52, 74, 70, 88, 84], // Joan Martinez
-            [82, 87, 72, 78, 45, 85], // Kostoulas
-            [78, 72, 87, 82, 84, 80], // Mouzakitis
-            [82, 85, 86, 84, 50, 72], // Can Uzun
-            [86, 85, 74, 83, 40, 76], // Pietuszewski
-            [89, 76, 72, 86, 38, 68]  // Monga
+            [93, 87, 82, 95, 42, 68]  // Estevao
         ];
 
         playersData.forEach((stats, index) => {
-            new Chart(document.getElementById(`radar${index + 1}`), {
-                type: 'radar',
-                data: { labels: labels, datasets: createDataset(stats) },
-                options: radarOptions
-            });
+            const ctx = document.getElementById(`radar${index + 1}`);
+            if(ctx) {
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: { labels: labels, datasets: createDataset(stats) },
+                    options: radarOptions
+                });
+            }
         });
 
         function filterCards() {
@@ -1220,6 +669,24 @@
                     card.style.display = 'none';
                 }
             }
+        }
+
+        function openModal(name, club, pos, val, foot, desc) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalClub').innerText = club;
+            document.getElementById('modalPos').innerText = pos;
+            document.getElementById('modalVal').innerText = val;
+            document.getElementById('modalFoot').innerText = foot;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('scoutModal').style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'scoutModal') forceCloseModal();
+        }
+
+        function forceCloseModal() {
+            document.getElementById('scoutModal').style.display = 'none';
         }
     </script>
 </body>
