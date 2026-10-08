@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXTGEN SCOUT | Elite U21 Intelligence</title>
+    <title>NEXTGEN SCOUT | Pro U21 Intelligence Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #030712;
-            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-bg: rgba(15, 23, 42, 0.75);
             --neon-blue: #38bdf8;
             --neon-purple: #a855f7;
             --neon-gold: #f59e0b;
             --text-main: #f9fafb;
             --text-sub: #9ca3af;
             --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(56, 189, 248, 0.4);
         }
 
         * {
@@ -29,8 +28,8 @@
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-main);
             padding: 24px 16px;
@@ -78,7 +77,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
         }
 
         .live-dot {
@@ -113,7 +111,7 @@
             color: var(--text-main);
             font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         .search-bar:focus {
@@ -140,7 +138,6 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.25s ease;
-            backdrop-filter: blur(8px);
         }
 
         .pill.active, .pill:hover {
@@ -153,7 +150,7 @@
         /* GRID */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 28px;
         }
 
@@ -170,38 +167,12 @@
             position: relative;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .player-card:hover {
             transform: translateY(-6px);
             border-color: rgba(56, 189, 248, 0.3);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .player-card:hover::before {
-            opacity: 1;
-        }
-
-        /* RANK 1 GOLD BADGE EXTRA EFFORT */
-        .player-card.rank-1 {
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(17, 24, 39, 0.8) 100%);
-        }
-
-        .player-card.rank-1::before {
-            background: linear-gradient(90deg, transparent, var(--neon-gold), transparent);
-            opacity: 1;
         }
 
         .rank-badge {
@@ -215,7 +186,11 @@
             padding: 4px 10px;
             border-radius: 20px;
             border: 1px solid rgba(56, 189, 248, 0.3);
-            letter-spacing: 0.5px;
+        }
+
+        .player-card.rank-1 {
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(15, 23, 42, 0.85) 100%);
         }
 
         .rank-1 .rank-badge {
@@ -226,51 +201,67 @@
 
         .card-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-top: 6px;
+            align-items: center;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        /* PLAYER AVATAR PICTURES */
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+            background-color: #1e293b;
+            flex-shrink: 0;
+        }
+
+        .rank-1 .player-avatar {
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .player-identity {
+            flex-grow: 1;
         }
 
         .player-identity h2 {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #fff;
-            letter-spacing: -0.3px;
+            line-height: 1.2;
         }
 
         .club-tag {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--neon-blue);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-top: 4px;
         }
 
         .ovr-badge {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+            background: rgba(56, 189, 248, 0.15);
             border: 1px solid rgba(56, 189, 248, 0.4);
             color: #fff;
-            padding: 8px 14px;
-            border-radius: 12px;
+            padding: 6px 10px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
         }
 
         .ovr-val {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 900;
             line-height: 1;
-            background: linear-gradient(135deg, #38bdf8, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--neon-blue);
         }
 
         .ovr-lbl {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 700;
             color: var(--text-sub);
-            letter-spacing: 0.5px;
         }
 
         .meta-strip {
@@ -284,15 +275,12 @@
             color: var(--text-sub);
         }
 
-        .meta-strip span strong {
-            color: #fff;
-        }
+        .meta-strip span strong { color: #fff; }
 
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 190px;
-            margin: 4px 0;
+            height: 180px;
         }
 
         .metrics-grid {
@@ -307,13 +295,13 @@
         }
 
         .metric-val {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--neon-blue);
         }
 
         .metric-lbl {
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             color: var(--text-sub);
             text-transform: uppercase;
             font-weight: 600;
@@ -329,9 +317,7 @@
             line-height: 1.45;
         }
 
-        .scout-report strong {
-            color: #fff;
-        }
+        .scout-report strong { color: #fff; }
 
         /* ACTIONS */
         .card-actions {
@@ -364,7 +350,6 @@
         .btn-yt:hover {
             background: #ef4444;
             color: #fff;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
         }
 
         .btn-modal {
@@ -376,7 +361,6 @@
         .btn-modal:hover {
             background: var(--neon-blue);
             color: var(--bg-dark);
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
         }
 
         /* MODAL DOSSIER POPUP */
@@ -431,10 +415,10 @@
             </div>
         </div>
         <div class="controls">
-            <input type="text" id="searchInput" class="search-bar" placeholder="⚡ Search name, team, position, or nationality..." onkeyup="filterCards()">
+            <input type="text" id="searchInput" class="search-bar" placeholder="⚡ Search player, club, position, or nationality..." onkeyup="filterCards()">
             <div class="filter-pills">
-                <button class="pill active" onclick="filterCategory('all', this)">All Top 30</button>
-                <button class="pill" onclick="filterCategory('forward', this)">Forwards & Wingers</button>
+                <button class="pill active" onclick="filterCategory('all', this)">All Top Prospects</button>
+                <button class="pill" onclick="filterCategory('forward', this)">Forwards / Wingers</button>
                 <button class="pill" onclick="filterCategory('midfielder', this)">Midfielders</button>
                 <button class="pill" onclick="filterCategory('defender', this)">Defenders</button>
             </div>
@@ -447,6 +431,7 @@
         <div class="player-card rank-1" data-category="forward">
             <div class="rank-badge">👑 RANK #1</div>
             <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Lamine Yamal">
                 <div class="player-identity">
                     <h2>Lamine Yamal</h2>
                     <div class="club-tag">FC Barcelona • First Team</div>
@@ -464,10 +449,10 @@
                 <div class="metric-item"><div class="metric-val">93</div><div class="metric-lbl">Vision</div></div>
                 <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Finish</div></div>
             </div>
-            <div class="scout-report"><strong>Scout Notes:</strong> Generation-defining winger. Elite 1v1 execution and world-class press resistance.</div>
+            <div class="scout-report"><strong>Scout Notes:</strong> Generation-defining winger. World-class press resistance and elite 1v1 execution.</div>
             <div class="card-actions">
-                <button class="btn-action btn-modal" onclick="openModal('Lamine Yamal', 'FC Barcelona', 'RW', '€180M', 'Left-Footed', 'Generation-defining winger with supreme vision, elite 1v1 execution, and composure in high-pressure games.')">Full Intel</button>
-                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Lamine+Yamal+highlights" target="_blank">▶ Watch Clips</a>
+                <button class="btn-action btn-modal" onclick="openModal('Lamine Yamal', 'FC Barcelona', 'RW', '€180M', 'Left-Footed', 'Generation-defining winger with supreme vision, elite 1v1 execution, and high-pressure composure.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Lamine+Yamal+highlights" target="_blank">▶ Clips</a>
             </div>
         </div>
 
@@ -475,6 +460,7 @@
         <div class="player-card" data-category="forward">
             <div class="rank-badge">RANK #2</div>
             <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="Endrick">
                 <div class="player-identity">
                     <h2>Endrick</h2>
                     <div class="club-tag">Real Madrid • ST</div>
@@ -494,8 +480,8 @@
             </div>
             <div class="scout-report"><strong>Scout Notes:</strong> Dynamic, powerful striker with explosive low-center-of-gravity striking power.</div>
             <div class="card-actions">
-                <button class="btn-action btn-modal" onclick="openModal('Endrick', 'Real Madrid', 'ST', '0M', 'Left-Footed', 'Dynamic, powerful forward with game-changing shot acceleration and explosive physical strength.')">Full Intel</button>
-                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Endrick+Real+Madrid+highlights" target="_blank">▶ Watch Clips</a>
+                <button class="btn-action btn-modal" onclick="openModal('Endrick', 'Real Madrid', 'ST', '€90M', 'Left-Footed', 'Dynamic, powerful forward with game-changing shot acceleration and explosive physical strength.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Endrick+Real+Madrid+highlights" target="_blank">▶ Clips</a>
             </div>
         </div>
 
@@ -503,9 +489,10 @@
         <div class="player-card" data-category="midfielder">
             <div class="rank-badge">RANK #3</div>
             <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" alt="Zaïre-Emery">
                 <div class="player-identity">
                     <h2>Warren Zaïre-Emery</h2>
-                    <div class="club-tag">Paris Saint-Germain • CM</div>
+                    <div class="club-tag">PSG • CM</div>
                 </div>
                 <div class="ovr-badge"><div class="ovr-val">94</div><div class="ovr-lbl">POT</div></div>
             </div>
@@ -523,7 +510,7 @@
             <div class="scout-report"><strong>Scout Notes:</strong> Modern box-to-box engine. Dominates central midfield duels with high physical maturity.</div>
             <div class="card-actions">
                 <button class="btn-action btn-modal" onclick="openModal('Warren Zaïre-Emery', 'PSG', 'CM', '€75M', 'Right-Footed', 'Complete box-to-box midfielder with exceptional physical recovery and press evasion.')">Full Intel</button>
-                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Warren+Zaire-Emery+highlights" target="_blank">▶ Watch Clips</a>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Warren+Zaire-Emery+highlights" target="_blank">▶ Clips</a>
             </div>
         </div>
 
@@ -531,6 +518,7 @@
         <div class="player-card" data-category="defender">
             <div class="rank-badge">RANK #4</div>
             <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80" alt="Pau Cubarsí">
                 <div class="player-identity">
                     <h2>Pau Cubarsí</h2>
                     <div class="club-tag">FC Barcelona • CB</div>
@@ -551,7 +539,7 @@
             <div class="scout-report"><strong>Scout Notes:</strong> Elite ball-playing defender. Exceptional line-breaking vertical passing capability.</div>
             <div class="card-actions">
                 <button class="btn-action btn-modal" onclick="openModal('Pau Cubarsí', 'FC Barcelona', 'CB', '€70M', 'Right-Footed', 'Next-gen ball-playing CB with elite vertical passing precision under high press.')">Full Intel</button>
-                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Pau+Cubarsi+highlights" target="_blank">▶ Watch Clips</a>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Pau+Cubarsi+highlights" target="_blank">▶ Clips</a>
             </div>
         </div>
 
@@ -559,6 +547,7 @@
         <div class="player-card" data-category="forward">
             <div class="rank-badge">RANK #5</div>
             <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80" alt="Estêvão Willian">
                 <div class="player-identity">
                     <h2>Estêvão Willian</h2>
                     <div class="club-tag">Chelsea • RW</div>
@@ -579,7 +568,36 @@
             <div class="scout-report"><strong>Scout Notes:</strong> Dynamic attacker with direct Brazilian flair and lethal long-range curling finishes.</div>
             <div class="card-actions">
                 <button class="btn-action btn-modal" onclick="openModal('Estêvão Willian', 'Chelsea', 'RW', '€60M', 'Left-Footed', 'Nicknamed Messinho for his smooth close-control dribbling and explosive scoring instincts.')">Full Intel</button>
-                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Estevao+Willian+highlights" target="_blank">▶ Watch Clips</a>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Estevao+Willian+highlights" target="_blank">▶ Clips</a>
+            </div>
+        </div>
+
+        <!-- 6. Arda Güler -->
+        <div class="player-card" data-category="midfielder">
+            <div class="rank-badge">RANK #6</div>
+            <div class="card-header">
+                <img class="player-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80" alt="Arda Güler">
+                <div class="player-identity">
+                    <h2>Arda Güler</h2>
+                    <div class="club-tag">Real Madrid • AM</div>
+                </div>
+                <div class="ovr-badge"><div class="ovr-val">93</div><div class="ovr-lbl">POT</div></div>
+            </div>
+            <div class="meta-strip">
+                <span>Age: <strong>21</strong></span>
+                <span>Pos: <strong>AM / RW</strong></span>
+                <span>Nat: <strong>TUR 🇹🇷</strong></span>
+            </div>
+            <div class="chart-wrapper"><canvas id="radar6"></canvas></div>
+            <div class="metrics-grid">
+                <div class="metric-item"><div class="metric-val">92</div><div class="metric-lbl">Vision</div></div>
+                <div class="metric-item"><div class="metric-val">90</div><div class="metric-lbl">Finesse</div></div>
+                <div class="metric-item"><div class="metric-val">88</div><div class="metric-lbl">Passing</div></div>
+            </div>
+            <div class="scout-report"><strong>Scout Notes:</strong> Master playmaker with world-class final-third vision and surgical set-piece accuracy.</div>
+            <div class="card-actions">
+                <button class="btn-action btn-modal" onclick="openModal('Arda Güler', 'Real Madrid', 'AM', '€65M', 'Left-Footed', 'Elite playmaker possessing outstanding spatial awareness and precise long-range finishing.')">Full Intel</button>
+                <a class="btn-action btn-yt" href="https://www.youtube.com/results?search_query=Arda+Guler+highlights" target="_blank">▶ Clips</a>
             </div>
         </div>
 
@@ -633,18 +651,21 @@
             [91, 93, 75, 88, 45, 88], // Endrick
             [85, 80, 89, 86, 85, 88], // Zaire-Emery
             [76, 55, 93, 78, 90, 82], // Cubarsi
-            [93, 87, 82, 95, 42, 68]  // Estevao
+            [93, 87, 82, 95, 42, 68], // Estevao
+            [82, 88, 92, 91, 40, 65]  // Guler
         ];
 
-        playersData.forEach((stats, index) => {
-            const ctx = document.getElementById(`radar${index + 1}`);
-            if(ctx) {
-                new Chart(ctx, {
-                    type: 'radar',
-                    data: { labels: labels, datasets: createDataset(stats) },
-                    options: radarOptions
-                });
-            }
+        window.addEventListener('DOMContentLoaded', () => {
+            playersData.forEach((stats, index) => {
+                const ctx = document.getElementById(`radar${index + 1}`);
+                if(ctx) {
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: { labels: labels, datasets: createDataset(stats) },
+                        options: radarOptions
+                    });
+                }
+            });
         });
 
         function filterCards() {
